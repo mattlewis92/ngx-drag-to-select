@@ -75,6 +75,7 @@ export class SelectContainerComponent implements AfterViewInit, OnDestroy {
   @Input() disabled = false;
   @Input() disableDrag = false;
   @Input() selectMode = false;
+  @Input() selectWithShortcut = false;
 
   @Input()
   @HostBinding('class.ngx-custom')
@@ -288,14 +289,20 @@ export class SelectContainerComponent implements AfterViewInit, OnDestroy {
       }
 
       const shouldAdd =
-        (withinBoundingBox && !this.shortcuts.toggleSingleItem(event) && !this.selectMode) ||
+        (withinBoundingBox &&
+          !this.shortcuts.toggleSingleItem(event) &&
+          !this.selectMode &&
+          !this.selectWithShortcut) ||
         (withinBoundingBox && this.shortcuts.toggleSingleItem(event) && !item.selected) ||
         (!withinBoundingBox && this.shortcuts.toggleSingleItem(event) && item.selected) ||
         (withinBoundingBox && !item.selected && this.selectMode) ||
         (!withinBoundingBox && item.selected && this.selectMode);
 
       const shouldRemove =
-        (!withinBoundingBox && !this.shortcuts.toggleSingleItem(event) && !this.selectMode) ||
+        (!withinBoundingBox &&
+          !this.shortcuts.toggleSingleItem(event) &&
+          !this.selectMode &&
+          !this.selectWithShortcut) ||
         (!withinBoundingBox && this.shortcuts.toggleSingleItem(event) && !item.selected) ||
         (withinBoundingBox && this.shortcuts.toggleSingleItem(event) && item.selected) ||
         (!withinBoundingBox && !item.selected && this.selectMode) ||
