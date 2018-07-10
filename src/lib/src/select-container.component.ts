@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-import { Observable, Subject, combineLatest, merge, fromEvent } from 'rxjs';
+import { Observable, Subject, combineLatest, merge, fromEvent, BehaviorSubject } from 'rxjs';
 
 import {
   switchMap,
@@ -49,7 +49,6 @@ import {
   getRelativeMousePosition,
   getMousePosition
 } from './utils';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'ngx-select-container',
@@ -243,7 +242,7 @@ export class SelectContainerComponent implements AfterViewInit, OnDestroy {
       const containerScroll$ = fromEvent(this.host, 'scroll');
 
       merge(resize$, windowScroll$, containerScroll$)
-        .pipe(startWith('INITIAL_UPDATE'), auditTime(AUDIT_TIME), takeUntil(this.destroy$))
+        .pipe(startWith('INITIAL_UPDATE' as any), auditTime(AUDIT_TIME), takeUntil(this.destroy$))
         .subscribe(() => {
           this.update();
         });
