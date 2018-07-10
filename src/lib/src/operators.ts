@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SelectBox, SelectBoxInput, SelectContainerHost } from './models';
+import { MousePosition, SelectBox, SelectBoxInput, SelectContainerHost } from './models';
 import { getRelativeMousePosition } from './utils';
 
 export const createSelectBox = (container: SelectContainerHost) => (
@@ -8,7 +8,7 @@ export const createSelectBox = (container: SelectContainerHost) => (
 ): Observable<SelectBox<number>> =>
   source.pipe(
     map(([event, opacity, { x, y }]) => {
-      const mousePosition = getRelativeMousePosition(event, container);
+      const mousePosition: MousePosition = getRelativeMousePosition(event, container);
 
       const width = opacity > 0 ? mousePosition.x - x : 0;
       const height = opacity > 0 ? mousePosition.y - y : 0;
